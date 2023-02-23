@@ -1,6 +1,7 @@
-name: Core
+name: HologramSK
 version: '${project.version}'
 main: me.outspending.core.Core
 api-version: 1.17
 authors: [ Outspending ]
 description: The best hologram addon for Skript
+softdepend: [ Skript ]

@@ -3,8 +3,14 @@ package org.hologramsk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public interface NMS {
 
+    /*
+    * For NMSHolograms
+    * V0.0.1
+     */
     void createHologram(String name, Location location);
 
     void addHologramLine(Hologram hologram, HologramLine line);
@@ -25,5 +31,31 @@ public interface NMS {
 
     void insertLine(Hologram hologram, HologramLine line, int index);
 
-    void rearrangeLines(Hologram hologram);
+    void update(Hologram hologram);
+
+    void setLines(String... lines);
+
+    List<HologramLine> getLines();
+
+    /*
+    * For NMSHologramLine
+    * V0.0.1
+     */
+
+    void showTo(HologramLine hologramLine, Player player);
+
+    void hideFrom(HologramLine hologramLine, Player player);
+
+    void teleportLine(HologramLine hologramLine, Location location);
+
+    void setText(HologramLine hologramLine, String text);
+
+    void updateTextFor(HologramLine hologramLine, String text, Player player);
+
+    void updateLocationFor(HologramLine hologramLine, Location location, Player player);
+
+    void updateLine(HologramLine hologramLine);
+
+    void spawnArmorStand(Location location, String name);
+    void spawnArmorStand(Location location);
 }

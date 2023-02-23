@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
 
     <groupId>me.outspending</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>HologramSK</artifactId>
     <version>0.0.1</version>
 
     <name>Core</name>
@@ -68,6 +68,11 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>skript-releases</id>
+            <name>Skript Repository</name>
+            <url>https://repo.skriptlang.org/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -78,8 +83,39 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.github.SkriptLang</groupId>
+            <artifactId>Skript</artifactId>
+            <version>2.6.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.example</groupId>
             <artifactId>HologramSK-API</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>Bukkit_1_17_R1</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>Bukkit_1_18_R1</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>Bukkit_1_18_R2</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>Bukkit_1_19_R1</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>Bukkit_1_19_R2</artifactId>
             <version>0.0.1</version>
         </dependency>
     </dependencies>
