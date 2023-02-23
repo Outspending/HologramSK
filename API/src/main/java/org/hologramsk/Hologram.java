@@ -10,6 +10,12 @@ public interface Hologram {
 
     Location getLocation();
 
+    List<HologramLine> getLines();
+
+    String getName();
+
+    float getLineHeight();
+
     void teleport(Location location);
 
     void showTo(Player player);

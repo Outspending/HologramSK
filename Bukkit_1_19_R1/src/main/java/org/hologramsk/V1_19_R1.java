@@ -1,11 +1,22 @@
 package org.hologramsk;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class V1_19_R1 implements NMS {
+public class V1_19_R1 implements NMS, HologramData {
 
 
     @Override
@@ -15,7 +26,10 @@ public class V1_19_R1 implements NMS {
 
     @Override
     public void addHologramLine(Hologram hologram, HologramLine line) {
+        Location location = hologram.getLocation();
+        location.setY(location.getY() - (hologram.getLineCount() * hologram.getLineHeight()));
 
+        updateHologramLine(hologram, line);
     }
 
     @Override
@@ -45,12 +59,22 @@ public class V1_19_R1 implements NMS {
 
     @Override
     public void updateHologram(Hologram hologram) {
-
+        for (HologramLine line : hologram.getLines()) {
+            updateHologramLine(hologram, line);
+        }
     }
 
     @Override
     public void updateHologramLine(Hologram hologram, HologramLine line) {
-
+        LivingEntity entity = ((CraftLivingEntity) line.getArmorStand()).getHandle();
+        ClientboundAddEntityPacket spawnPacket = new ClientboundAddEntityPacket(entity);
+        ClientboundSetEntityDataPacket dataPacket = new ClientboundSetEntityDataPacket(entity.getId(), entity.getEntityData(), true);
+        Location location = hologram.getLocation();
+        for (Player plr : location.getWorld().getPlayers()) {
+            ServerPlayer player = ((CraftPlayer) plr).getHandle();
+            player.connection.send(spawnPacket);
+            player.connection.send(dataPacket);
+        }
     }
 
     @Override
@@ -109,12 +133,29 @@ public class V1_19_R1 implements NMS {
     }
 
     @Override
-    public void spawnArmorStand(Location location, String name) {
-
+    public void updateHologramsInWorld(World world) {
+        for (Hologram hologram : holograms.get(world)) {
+            updateHologram(hologram);
+        }
     }
 
     @Override
-    public void spawnArmorStand(Location location) {
+    public org.bukkit.entity.LivingEntity spawnArmorStand(Location location, String name) {
+        ServerLevel level = ((CraftWorld) location.getWorld()).getHandle();
+        Component component = Component.nullToEmpty(name);
+        ArmorStand armorStand = new ArmorStand(level, location.getX(), location.getY(), location.getZ());
 
+        armorStand.setInvisible(true);
+        armorStand.setInvulnerable(true);
+        armorStand.setMarker(true);
+        armorStand.setCustomNameVisible(true);
+        armorStand.setCustomName(component);
+        armorStand.setNoGravity(true);
+        return (org.bukkit.entity.LivingEntity) armorStand.getBukkitEntity();
+    }
+
+    @Override
+    public org.bukkit.entity.LivingEntity spawnArmorStand(Location location) {
+        return this.spawnArmorStand(location, "Placeholder");
     }
 }

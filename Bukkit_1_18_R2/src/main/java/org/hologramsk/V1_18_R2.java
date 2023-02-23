@@ -1,12 +1,13 @@
 package org.hologramsk;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class V1_19_R2 implements NMS {
+public class V1_18_R2 implements NMS {
 
 
     @Override
@@ -106,6 +107,11 @@ public class V1_19_R2 implements NMS {
 
     @Override
     public void updateLine(HologramLine hologramLine) {
+
+    }
+
+    @Override
+    public void updateHologramsInWorld(World world) {
 
     }
 

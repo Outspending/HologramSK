@@ -1,3 +1,5 @@
 org\hologramsk\Hologram.class
 org\hologramsk\NMS.class
+org\hologramsk\HologramAPI.class
 org\hologramsk\HologramLine.class
+org\hologramsk\HologramData.class

@@ -1,6 +1,8 @@
 package org.hologramsk;
 
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -56,6 +58,8 @@ public interface NMS {
 
     void updateLine(HologramLine hologramLine);
 
-    void spawnArmorStand(Location location, String name);
-    void spawnArmorStand(Location location);
+    void updateHologramsInWorld(World world);
+
+    LivingEntity spawnArmorStand(Location location, String name);
+    LivingEntity spawnArmorStand(Location location);
 }
