@@ -87,6 +87,8 @@ public final class Core extends JavaPlugin implements CommandExecutor {
             Bukkit.getLogger().log(Level.SEVERE, "[HologramSK] Skript is required to run HologramSK!");
             Bukkit.getPluginManager().disablePlugin(plugin);
             return false;
+        } else if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            Bukkit.getLogger().log(Level.WARNING, "[HologramSK] PlaceholderAPI is not installed, placeholders will not work!");
         }
         return true;
     }

@@ -2,7 +2,9 @@ package org.hologramsk;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
+import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,7 +36,7 @@ public class V1_19_R1 implements NMS, HologramData {
 
     @Override
     public void addHologramLine(Hologram hologram, String name) {
-
+        Location location = hologram.getLocation().clone().add(0, hologram.getLineCount() * -hologram.getLineHeight(), 0);
     }
 
     @Override
@@ -44,17 +46,37 @@ public class V1_19_R1 implements NMS, HologramData {
 
     @Override
     public void displayHologram(Hologram hologram, Player player) {
-
+        List<HologramLine> lines = hologram.getLines();
+        ServerPlayer plr = ((CraftPlayer) player).getHandle();
+        for (HologramLine line : lines) {
+            LivingEntity entity = ((CraftLivingEntity) line.getArmorStand()).getHandle();
+            ClientboundAddEntityPacket packet = new ClientboundAddEntityPacket(entity);
+            plr.connection.send(packet);
+        }
     }
 
     @Override
     public void hideHologram(Hologram hologram, Player player) {
-
+        List<HologramLine> lines = hologram.getLines();
+        ServerPlayer plr = ((CraftPlayer) player).getHandle();
+        for (HologramLine line : lines) {
+            LivingEntity entity = ((CraftLivingEntity) line.getArmorStand()).getHandle();
+            ClientboundRemoveEntitiesPacket packet = new ClientboundRemoveEntitiesPacket(entity.getId());
+            plr.connection.send(packet);
+        }
     }
 
     @Override
     public void deleteHologram(Hologram hologram) {
-
+        List<HologramLine> lines = hologram.getLines();
+        for (HologramLine line : lines) {
+            LivingEntity entity = ((CraftLivingEntity) line.getArmorStand()).getHandle();
+            ClientboundRemoveEntitiesPacket packet = new ClientboundRemoveEntitiesPacket(entity.getId());
+            for (Player plr : hologram.getLocation().getWorld().getPlayers()) {
+                ServerPlayer player = ((CraftPlayer) plr).getHandle();
+                player.connection.send(packet);
+            }
+        }
     }
 
     @Override
@@ -99,17 +121,39 @@ public class V1_19_R1 implements NMS, HologramData {
 
     @Override
     public void showTo(HologramLine hologramLine, Player player) {
-
+        Hologram hologram = hologramLine.getHologram();
+        if (hologram.getHiddenPlayers().contains(player.getUniqueId())) {
+            LivingEntity entity = ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
+            ClientboundAddEntityPacket spawnPacket = new ClientboundAddEntityPacket(entity);
+            ClientboundSetEntityDataPacket dataPacket = new ClientboundSetEntityDataPacket(entity.getId(), entity.getEntityData(), true);
+            ServerPlayer plr = ((CraftPlayer) player).getHandle();
+            plr.connection.send(spawnPacket);
+            plr.connection.send(dataPacket);
+            hologram.getHiddenPlayers().remove(player.getUniqueId());
+        }
     }
 
     @Override
     public void hideFrom(HologramLine hologramLine, Player player) {
-
+        Hologram hologram = hologramLine.getHologram();
+        if (!hologram.getHiddenPlayers().contains(player.getUniqueId())) {
+            LivingEntity entity = ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
+            ServerPlayer plr = ((CraftPlayer) player).getHandle();
+            ClientboundRemoveEntitiesPacket removePacket = new ClientboundRemoveEntitiesPacket(entity.getId());
+            plr.connection.send(removePacket);
+            hologram.getHiddenPlayers().add(player.getUniqueId());
+        }
     }
 
     @Override
     public void teleportLine(HologramLine hologramLine, Location location) {
-
+        LivingEntity entity = ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
+        entity.teleportTo(location.getX(), location.getY(), location.getZ());
+        ClientboundTeleportEntityPacket packet = new ClientboundTeleportEntityPacket(entity);
+        for (Player plr : location.getWorld().getPlayers()) {
+            ServerPlayer player = ((CraftPlayer) plr).getHandle();
+            player.connection.send(packet);
+        }
     }
 
     @Override
@@ -119,12 +163,19 @@ public class V1_19_R1 implements NMS, HologramData {
 
     @Override
     public void updateTextFor(HologramLine hologramLine, String text, Player player) {
-
+        Component component = Component.nullToEmpty(text);
+        ArmorStand armorStand = (ArmorStand) ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
+        armorStand.setCustomName(component);
+        ClientboundSetEntityDataPacket packet = new ClientboundSetEntityDataPacket(armorStand.getId(), armorStand.getEntityData(), true);
+        ((CraftPlayer) player).getHandle().connection.send(packet);
     }
 
     @Override
     public void updateLocationFor(HologramLine hologramLine, Location location, Player player) {
-
+        LivingEntity entity = ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
+        entity.teleportTo(location.getX(), location.getY(), location.getZ());
+        ClientboundTeleportEntityPacket packet = new ClientboundTeleportEntityPacket(entity);
+        ((CraftPlayer) player).getHandle().connection.send(packet);
     }
 
     @Override

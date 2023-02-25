@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public interface Hologram {
 
@@ -13,6 +14,8 @@ public interface Hologram {
     List<HologramLine> getLines();
 
     String getName();
+
+    List<UUID> getHiddenPlayers();s
 
     float getLineHeight();
 

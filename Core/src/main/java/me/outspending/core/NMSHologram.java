@@ -9,11 +9,13 @@ import org.hologramsk.NMS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class NMSHologram implements Hologram {
 
     private Location location;
     private List<HologramLine> lines = new ArrayList<>();
+    private List<UUID> hiddenPlayers = new ArrayList<>();
     private String name;
     private float lineHeight = 0.25f;
 
@@ -40,6 +42,11 @@ public class NMSHologram implements Hologram {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public List<UUID> getHiddenPlayers() {
+        return this.hiddenPlayers;
     }
 
     @Override
