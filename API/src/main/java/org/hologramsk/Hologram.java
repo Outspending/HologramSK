@@ -15,9 +15,11 @@ public interface Hologram {
 
     String getName();
 
-    List<UUID> getHiddenPlayers();s
+    List<UUID> getHiddenPlayers();
 
     float getLineHeight();
+
+    Location getNextLineLocation();
 
     void teleport(Location location);
 

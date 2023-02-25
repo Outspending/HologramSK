@@ -1,6 +1,7 @@
 package org.hologramsk;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -11,6 +12,11 @@ public class V1_19_R2 implements NMS {
 
     @Override
     public void createHologram(String name, Location location) {
+
+    }
+
+    @Override
+    public void moveHologram(Hologram hologram, Location location) {
 
     }
 
@@ -106,6 +112,11 @@ public class V1_19_R2 implements NMS {
 
     @Override
     public void updateLine(HologramLine hologramLine) {
+
+    }
+
+    @Override
+    public void updateHologramsInWorld(World world) {
 
     }
 

@@ -25,6 +25,11 @@ public class V1_17_R1 implements NMS {
     }
 
     @Override
+    public void moveHologram(Hologram hologram, Location location) {
+
+    }
+
+    @Override
     public void addHologramLine(Hologram hologram, HologramLine line) {
         Location location = hologram.getLocation();
         location.setY(location.getY() - (hologram.getLineCount() * hologram.getLineHeight()));

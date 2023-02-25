@@ -15,6 +15,8 @@ public interface NMS {
      */
     void createHologram(String name, Location location);
 
+    void moveHologram(Hologram hologram, Location location);
+
     void addHologramLine(Hologram hologram, HologramLine line);
 
     void addHologramLine(Hologram hologram, String name);

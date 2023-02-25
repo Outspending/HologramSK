@@ -55,18 +55,23 @@ public class NMSHologram implements Hologram {
     }
 
     @Override
-    public void teleport(Location location) {
+    public Location getNextLineLocation() {
+        return this.getLocation().clone().add(0, this.getLineCount() * this.getLineHeight(), 0);
+    }
 
+    @Override
+    public void teleport(Location location) {
+        Core.getNMSVersion().moveHologram(this, location);
     }
 
     @Override
     public void showTo(Player player) {
-
+        Core.getNMSVersion().displayHologram(this, player);
     }
 
     @Override
     public void hideFrom(Player player) {
-
+        Core.getNMSVersion().hideHologram(this, player);
     }
 
     @Override

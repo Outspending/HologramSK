@@ -16,6 +16,11 @@ public class V1_18_R2 implements NMS {
     }
 
     @Override
+    public void moveHologram(Hologram hologram, Location location) {
+
+    }
+
+    @Override
     public void addHologramLine(Hologram hologram, HologramLine line) {
 
     }

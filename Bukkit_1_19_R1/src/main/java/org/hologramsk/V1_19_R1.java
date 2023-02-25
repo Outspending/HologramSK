@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
@@ -24,6 +25,21 @@ public class V1_19_R1 implements NMS, HologramData {
     @Override
     public void createHologram(String name, Location location) {
 
+    }
+
+    @Override
+    public void moveHologram(Hologram hologram, Location location) {
+        List<HologramLine> lines = hologram.getLines();
+        for (HologramLine line : lines) {
+            Location spawnLocation = hologram.getNextLineLocation();
+            LivingEntity entity = ((CraftLivingEntity) line.getArmorStand()).getHandle();
+            entity.teleportTo(spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ());
+            ClientboundTeleportEntityPacket teleportPacket = new ClientboundTeleportEntityPacket(entity);
+            for (Player player : location.getWorld().getPlayers()) {
+                ServerPlayer plr = ((CraftPlayer) player).getHandle();
+                plr.connection.send(teleportPacket);
+            }
+        }
     }
 
     @Override
