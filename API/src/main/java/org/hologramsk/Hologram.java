@@ -19,7 +19,7 @@ public interface Hologram {
 
     float getLineHeight();
 
-    Location getNextLineLocation();
+    Location getNextLineLocation(int index);
 
     void teleport(Location location);
 

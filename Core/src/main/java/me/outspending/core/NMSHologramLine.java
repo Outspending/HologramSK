@@ -23,8 +23,7 @@ public class NMSHologramLine implements HologramLine {
         this.hologram = hologram;
         this.index = hologram.getLineCount();
         this.location = hologram.getLocation().clone().add(0, index * hologram.getLineHeight(), 0);
-        LivingEntity entity = nms.spawnArmorStand(location, text);
-        this.armorStand = entity;
+        this.armorStand = nms.spawnArmorStand(location, text);
 
         nms.updateHologramLine(hologram, this);
     }

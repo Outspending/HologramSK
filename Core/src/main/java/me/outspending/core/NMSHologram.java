@@ -1,6 +1,7 @@
 package me.outspending.core;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.hologramsk.Hologram;
 import org.hologramsk.HologramData;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class NMSHologram implements Hologram {
+public class NMSHologram implements Hologram, HologramData {
 
     private Location location;
     private List<HologramLine> lines = new ArrayList<>();
@@ -27,6 +28,7 @@ public class NMSHologram implements Hologram {
         this.name = name;
         this.location = location;
         this.lines.add(new NMSHologramLine(text, this));
+        holograms.computeIfAbsent(this.getLocation().getWorld(), k -> new ArrayList<>()).add(this);
     }
 
     @Override
@@ -55,8 +57,8 @@ public class NMSHologram implements Hologram {
     }
 
     @Override
-    public Location getNextLineLocation() {
-        return this.getLocation().clone().add(0, this.getLineCount() * this.getLineHeight(), 0);
+    public Location getNextLineLocation(int index) {
+        return this.getLocation().clone().add(0, index * this.getLineHeight(), 0);
     }
 
     @Override
@@ -78,7 +80,6 @@ public class NMSHologram implements Hologram {
     public void addLine(HologramLine line) {
         NMS nms = Core.getNMSVersion();
         nms.addHologramLine(this, line);
-        this.addLine(line);
     }
 
     @Override
@@ -86,7 +87,6 @@ public class NMSHologram implements Hologram {
         NMS nms = Core.getNMSVersion();
         NMSHologramLine line = new NMSHologramLine(text, this);
         nms.addHologramLine(this, line);
-        this.addLine(line);
     }
 
     @Override
@@ -126,6 +126,16 @@ public class NMSHologram implements Hologram {
 
     @Override
     public void delete() {
-
+        Core.getNMSVersion().deleteHologram(this);
+        World world = this.getLocation().getWorld();
+        List<Hologram> holos = holograms.get(world);
+        if (holos != null) {
+            holos.remove(this);
+            if (holos.isEmpty()) {
+                holograms.remove(world);
+            } else {
+                holograms.put(world, holos);
+            }
+        }
     }
 }

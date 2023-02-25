@@ -31,20 +31,7 @@ public class V1_17_R1 implements NMS {
 
     @Override
     public void addHologramLine(Hologram hologram, HologramLine line) {
-        Location location = hologram.getLocation();
-        location.setY(location.getY() - (hologram.getLineCount() * hologram.getLineHeight()));
 
-        ServerLevel level = ((CraftWorld) location.getWorld()).getHandle();
-        Component component = Component.nullToEmpty(line.getText());
-        ArmorStand armorStand = new ArmorStand(level, location.getX(), location.getY(), location.getZ());
-
-        armorStand.setInvisible(true);
-        armorStand.setInvulnerable(true);
-        armorStand.setMarker(true);
-        armorStand.setCustomNameVisible(true);
-        armorStand.setCustomName(component);
-        armorStand.setNoGravity(true);
-        updateHologramLine(hologram, line);
     }
 
     @Override
@@ -79,11 +66,7 @@ public class V1_17_R1 implements NMS {
 
     @Override
     public void updateHologramLine(Hologram hologram, HologramLine line) {
-        ClientboundAddEntityPacket spawnPacket = new ClientboundAddEntityPacket((Entity) line.getArmorStand());
-        Location location = hologram.getLocation();
-        location.getWorld().getPlayers().forEach(player -> {
-            ((CraftPlayer) player).getHandle().connection.send(spawnPacket);
-        });
+
     }
 
     @Override

@@ -30,15 +30,17 @@ public class V1_19_R1 implements NMS, HologramData {
     @Override
     public void moveHologram(Hologram hologram, Location location) {
         List<HologramLine> lines = hologram.getLines();
+        int index = 0;
         for (HologramLine line : lines) {
-            Location spawnLocation = hologram.getNextLineLocation();
+            double y = hologram.getNextLineLocation(index).getY();
             LivingEntity entity = ((CraftLivingEntity) line.getArmorStand()).getHandle();
-            entity.teleportTo(spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ());
+            entity.teleportTo(location.getX(), y, location.getZ());
             ClientboundTeleportEntityPacket teleportPacket = new ClientboundTeleportEntityPacket(entity);
             for (Player player : location.getWorld().getPlayers()) {
                 ServerPlayer plr = ((CraftPlayer) player).getHandle();
                 plr.connection.send(teleportPacket);
             }
+            index++;
         }
     }
 

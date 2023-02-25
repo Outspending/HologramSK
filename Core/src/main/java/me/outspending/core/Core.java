@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.hologramsk.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,6 +43,13 @@ public final class Core extends JavaPlugin implements CommandExecutor {
         Player player = (Player) sender;
         NMSHologram hologram = new NMSHologram("test", "This is a test!", player.getLocation());
         hologram.addLine("This is a test line!");
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                hologram.teleport(player.getLocation());
+                Bukkit.broadcastMessage("Teleported hologram to player location!");
+            }
+        }.runTaskLater(this, 60);
         return true;
     }
 

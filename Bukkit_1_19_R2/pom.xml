@@ -85,7 +85,7 @@
         <dependency>
             <groupId>ca.bkaw</groupId>
             <artifactId>paper-nms</artifactId>
-            <version>1.19.2-SNAPSHOT</version>
+            <version>1.19.3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
