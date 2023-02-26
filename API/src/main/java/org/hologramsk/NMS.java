@@ -1,6 +1,7 @@
 package org.hologramsk;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -13,13 +14,13 @@ public interface NMS {
     * For NMSHolograms
     * V0.0.1
      */
-    void createHologram(String name, Location location);
-
     void moveHologram(Hologram hologram, Location location);
 
     void addHologramLine(Hologram hologram, HologramLine line);
 
     void addHologramLine(Hologram hologram, String name);
+
+    void addHologramLine(Hologram hologram, Material material);
 
     void removeHologramLine(Hologram hologram, int index);
 
@@ -35,8 +36,6 @@ public interface NMS {
 
     void insertLine(Hologram hologram, HologramLine line, int index);
 
-    void update(Hologram hologram);
-
     void setLines(String... lines);
 
     List<HologramLine> getLines();
@@ -50,18 +49,12 @@ public interface NMS {
 
     void hideFrom(HologramLine hologramLine, Player player);
 
-    void teleportLine(HologramLine hologramLine, Location location);
-
-    void setText(HologramLine hologramLine, String text);
-
     void updateTextFor(HologramLine hologramLine, String text, Player player);
 
     void updateLocationFor(HologramLine hologramLine, Location location, Player player);
 
-    void updateLine(HologramLine hologramLine);
-
-    void updateHologramsInWorld(World world);
-
     LivingEntity spawnArmorStand(Location location, String name);
     LivingEntity spawnArmorStand(Location location);
+
+    void loadAllHolograms(World world, Player player);
 }
