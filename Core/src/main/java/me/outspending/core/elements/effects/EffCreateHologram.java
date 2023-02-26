@@ -33,9 +33,8 @@ public class EffCreateHologram extends Effect {
             String[] lines = hologramLines.getArray(event);
             Bukkit.broadcastMessage(Arrays.toString(lines));
             hologram = new NMSHologram(name, lines[0], location);
-            lines[0] = null;
-            for (String line : lines) {
-                hologram.addLine(line);
+            for (int i = 1; i < lines.length; i++) {
+                hologram.addLine(lines[i]);
             }
         } else {
             hologram = new NMSHologram(name, location);

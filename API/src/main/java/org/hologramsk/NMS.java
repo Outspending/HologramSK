@@ -14,6 +14,8 @@ public interface NMS {
     * For NMSHolograms
     * V0.0.1
      */
+    void reloadHologram(Hologram hologram);
+
     void moveHologram(Hologram hologram, Location location);
 
     void addHologramLine(Hologram hologram, HologramLine line);
@@ -54,7 +56,26 @@ public interface NMS {
     void updateLocationFor(HologramLine hologramLine, Location location, Player player);
 
     LivingEntity spawnArmorStand(Location location, String name);
+
     LivingEntity spawnArmorStand(Location location);
 
     void loadAllHolograms(World world, Player player);
+
+    /*
+    * For Placeholders
+    * V0.0.1
+     */
+    boolean checkPlaceholder(Hologram hologram, int index);
+
+    boolean checkPlaceholder(Hologram hologram, HologramLine line);
+
+    void replacePlaceholder(Hologram hologram, int index);
+
+    void replacePlaceholder(Hologram hologram, int index, String text);
+
+    void replacePlaceholder(Hologram hologram, HologramLine line);
+
+    void replaceAllPlaceholders(Hologram hologram);
+
+    void replaceAllPlaceholdersInWorld(World world);
 }

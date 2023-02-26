@@ -19,6 +19,7 @@ public final class Core extends JavaPlugin implements CommandExecutor {
     public static JavaPlugin plugin;
     public static NMS NMSVersion;
     public static SkriptAddon addon;
+    public static boolean isPlaceholderAPIEnabled = false;
 
     @Override
     public void onEnable() {
@@ -97,6 +98,7 @@ public final class Core extends JavaPlugin implements CommandExecutor {
             return false;
         } else if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             Bukkit.getLogger().log(Level.WARNING, "[HologramSK] PlaceholderAPI is not installed, placeholders will not work!");
+            isPlaceholderAPIEnabled = true;
         }
         return true;
     }

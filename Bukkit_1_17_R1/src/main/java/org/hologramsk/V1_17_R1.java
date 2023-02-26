@@ -22,6 +22,11 @@ public class V1_17_R1 implements NMS {
 
 
     @Override
+    public void reloadHologram(Hologram hologram) {
+
+    }
+
+    @Override
     public void moveHologram(Hologram hologram, Location location) {
 
     }
@@ -118,6 +123,41 @@ public class V1_17_R1 implements NMS {
 
     @Override
     public void loadAllHolograms(World world, Player player) {
+
+    }
+
+    @Override
+    public boolean checkPlaceholder(Hologram hologram, int index) {
+        return false;
+    }
+
+    @Override
+    public boolean checkPlaceholder(Hologram hologram, HologramLine line) {
+        return false;
+    }
+
+    @Override
+    public void replacePlaceholder(Hologram hologram, int index) {
+
+    }
+
+    @Override
+    public void replacePlaceholder(Hologram hologram, int index, String text) {
+
+    }
+
+    @Override
+    public void replacePlaceholder(Hologram hologram, HologramLine line) {
+
+    }
+
+    @Override
+    public void replaceAllPlaceholders(Hologram hologram) {
+
+    }
+
+    @Override
+    public void replaceAllPlaceholdersInWorld(World world) {
 
     }
 }
