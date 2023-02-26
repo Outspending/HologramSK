@@ -7,24 +7,23 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.item.ItemEntity;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R2.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class V1_19_R2 implements NMS, HologramData {
-
-
-    @Override
-    public void createHologram(String name, Location location) {
-
-    }
 
     @Override
     public void moveHologram(Hologram hologram, Location location) {
@@ -54,6 +53,11 @@ public class V1_19_R2 implements NMS, HologramData {
     @Override
     public void addHologramLine(Hologram hologram, String name) {
         Location location = hologram.getLocation().clone().add(0, hologram.getLineCount() * -hologram.getLineHeight(), 0);
+    }
+
+    @Override
+    public void addHologramLine(Hologram hologram, Material material) {
+
     }
 
     @Override
@@ -122,11 +126,6 @@ public class V1_19_R2 implements NMS, HologramData {
     }
 
     @Override
-    public void update(Hologram hologram) {
-
-    }
-
-    @Override
     public void setLines(String... lines) {
 
     }
@@ -163,22 +162,6 @@ public class V1_19_R2 implements NMS, HologramData {
     }
 
     @Override
-    public void teleportLine(HologramLine hologramLine, Location location) {
-        net.minecraft.world.entity.LivingEntity entity = ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
-        entity.teleportTo(location.getX(), location.getY(), location.getZ());
-        ClientboundTeleportEntityPacket packet = new ClientboundTeleportEntityPacket(entity);
-        for (Player plr : location.getWorld().getPlayers()) {
-            ServerPlayer player = ((CraftPlayer) plr).getHandle();
-            player.connection.send(packet);
-        }
-    }
-
-    @Override
-    public void setText(HologramLine hologramLine, String text) {
-
-    }
-
-    @Override
     public void updateTextFor(HologramLine hologramLine, String text, Player player) {
         Component component = Component.nullToEmpty(text);
         ArmorStand armorStand = (ArmorStand) ((CraftLivingEntity) hologramLine.getArmorStand()).getHandle();
@@ -193,18 +176,6 @@ public class V1_19_R2 implements NMS, HologramData {
         entity.teleportTo(location.getX(), location.getY(), location.getZ());
         ClientboundTeleportEntityPacket packet = new ClientboundTeleportEntityPacket(entity);
         ((CraftPlayer) player).getHandle().connection.send(packet);
-    }
-
-    @Override
-    public void updateLine(HologramLine hologramLine) {
-
-    }
-
-    @Override
-    public void updateHologramsInWorld(World world) {
-        for (Hologram hologram : holograms.get(world)) {
-            updateHologram(hologram);
-        }
     }
 
     @Override
@@ -225,5 +196,10 @@ public class V1_19_R2 implements NMS, HologramData {
     @Override
     public org.bukkit.entity.LivingEntity spawnArmorStand(Location location) {
         return this.spawnArmorStand(location, "Placeholder");
+    }
+
+    @Override
+    public void loadAllHolograms(World world, Player player) {
+
     }
 }

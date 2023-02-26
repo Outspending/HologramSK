@@ -1,6 +1,7 @@
 package org.hologramsk;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -9,11 +10,6 @@ import java.util.List;
 
 public class V1_18_R2 implements NMS {
 
-
-    @Override
-    public void createHologram(String name, Location location) {
-
-    }
 
     @Override
     public void moveHologram(Hologram hologram, Location location) {
@@ -27,6 +23,11 @@ public class V1_18_R2 implements NMS {
 
     @Override
     public void addHologramLine(Hologram hologram, String name) {
+
+    }
+
+    @Override
+    public void addHologramLine(Hologram hologram, Material material) {
 
     }
 
@@ -66,11 +67,6 @@ public class V1_18_R2 implements NMS {
     }
 
     @Override
-    public void update(Hologram hologram) {
-
-    }
-
-    @Override
     public void setLines(String... lines) {
 
     }
@@ -91,32 +87,12 @@ public class V1_18_R2 implements NMS {
     }
 
     @Override
-    public void teleportLine(HologramLine hologramLine, Location location) {
-
-    }
-
-    @Override
-    public void setText(HologramLine hologramLine, String text) {
-
-    }
-
-    @Override
     public void updateTextFor(HologramLine hologramLine, String text, Player player) {
 
     }
 
     @Override
     public void updateLocationFor(HologramLine hologramLine, Location location, Player player) {
-
-    }
-
-    @Override
-    public void updateLine(HologramLine hologramLine) {
-
-    }
-
-    @Override
-    public void updateHologramsInWorld(World world) {
 
     }
 
@@ -128,5 +104,10 @@ public class V1_18_R2 implements NMS {
     @Override
     public LivingEntity spawnArmorStand(Location location) {
         return null;
+    }
+
+    @Override
+    public void loadAllHolograms(World world, Player player) {
+
     }
 }
