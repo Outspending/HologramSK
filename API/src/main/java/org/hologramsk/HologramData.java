@@ -8,5 +8,6 @@ import java.util.Map;
 
 public interface HologramData {
 
+    Map<String, Hologram> hologramsByName = new HashMap<>();
     Map<World, List<Hologram>> holograms = new HashMap<>();
 }

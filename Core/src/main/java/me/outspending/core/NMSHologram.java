@@ -25,10 +25,14 @@ public class NMSHologram implements Hologram, HologramData {
     }
 
     public NMSHologram(String name, String text, Location location) {
+        if (hologramsByName.containsKey(name)) {
+            throw new IllegalArgumentException(String.format("A hologram with the name %s already exists!", name));
+        }
         this.name = name;
         this.location = location;
         this.lines.add(new NMSHologramLine(text, this));
         holograms.computeIfAbsent(this.getLocation().getWorld(), k -> new ArrayList<>()).add(this);
+        hologramsByName.put(name, this);
     }
 
     @Override
@@ -137,5 +141,6 @@ public class NMSHologram implements Hologram, HologramData {
                 holograms.put(world, holos);
             }
         }
+        hologramsByName.remove(this.getName());
     }
 }

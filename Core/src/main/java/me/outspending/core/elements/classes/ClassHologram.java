@@ -5,6 +5,7 @@ import ch.njol.skript.classes.Parser;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import me.outspending.core.NMSHologram;
+import me.outspending.core.SkriptData;
 import org.jetbrains.annotations.Nullable;
 
 public class ClassHologram {
@@ -35,6 +36,7 @@ public class ClassHologram {
                     public String toVariableNameString(NMSHologram nmsHologram) {
                         return "NMSHologram{" + nmsHologram.getName() + "}";
                     }
-                }));
+                })
+                .changer(SkriptData.SOMETHING_IDK));
     }
 }

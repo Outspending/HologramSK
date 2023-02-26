@@ -1,12 +1,16 @@
 me\outspending\core\elements\classes\ClassHologram.class
+me\outspending\core\Core$2.class
 me\outspending\core\NMSHologram.class
 me\outspending\core\Core.class
 me\outspending\core\NMSHologramLine.class
 me\outspending\core\elements\effects\EffCreateHologram.class
+me\outspending\core\SkriptData$1.class
 me\outspending\core\elements\classes\ClassHologram$1.class
 me\outspending\core\elements\classes\ClassHologramLine.class
+me\outspending\core\SkriptData$2.class
 me\outspending\core\elements\expressions\ExprLastHologram.class
 me\outspending\core\SkriptData.class
 me\outspending\core\Core$1.class
+me\outspending\core\elements\expressions\ExprGetHologram.class
 me\outspending\core\elements\classes\ClassHologramLine$1.class
-me\outspending\core\elements\effects\EffDeleteHologram.class
+me\outspending\core\elements\effects\EffMoveHologram.class

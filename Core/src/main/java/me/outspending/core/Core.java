@@ -3,6 +3,7 @@ package me.outspending.core;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,12 +15,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
-public final class Core extends JavaPlugin implements CommandExecutor {
+public final class Core extends JavaPlugin {
 
     public static JavaPlugin plugin;
     public static NMS NMSVersion;
     public static SkriptAddon addon;
-    public static boolean isPlaceholderAPIEnabled = false;
 
     @Override
     public void onEnable() {
@@ -34,24 +34,7 @@ public final class Core extends JavaPlugin implements CommandExecutor {
             e.printStackTrace();
         }
 
-        getCommand("testing").setExecutor(this);
         Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
-    }
-
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-        Player player = (Player) sender;
-        NMSHologram hologram = new NMSHologram("test", "This is a test!", player.getLocation());
-        hologram.addLine("This is a test line!");
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                hologram.teleport(player.getLocation());
-                Bukkit.broadcastMessage("Teleported hologram to player location!");
-            }
-        }.runTaskLater(this, 60);
-        return true;
     }
 
     @Override
@@ -98,8 +81,17 @@ public final class Core extends JavaPlugin implements CommandExecutor {
             return false;
         } else if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             Bukkit.getLogger().log(Level.WARNING, "[HologramSK] PlaceholderAPI is not installed, placeholders will not work!");
-            isPlaceholderAPIEnabled = true;
+            return true;
         }
+        HologramAPI.setPlaceholderAPI(true);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (World world : Bukkit.getWorlds()) {
+                    NMSVersion.replaceAllPlaceholdersInWorld(world);
+                }
+            }
+        }.runTaskTimerAsynchronously(plugin, 20, 20);
         return true;
     }
 

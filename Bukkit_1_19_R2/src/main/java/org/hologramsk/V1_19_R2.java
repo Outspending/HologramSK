@@ -71,14 +71,14 @@ public class V1_19_R2 implements NMS, HologramData {
     @Override
     public void addHologramLine(Hologram hologram, HologramLine line) {
         Location location = hologram.getLocation();
-        location.setY(location.getY() - (hologram.getLineCount() * hologram.getLineHeight()));
+        location.setY(location.getY() - ((hologram.getLineCount() + 1) * -hologram.getLineHeight()));
         hologram.getLines().add(line);
         updateHologramLine(hologram, line);
     }
 
     @Override
     public void addHologramLine(Hologram hologram, String name) {
-        Location location = hologram.getLocation().clone().add(0, hologram.getLineCount() * -hologram.getLineHeight(), 0);
+
     }
 
     @Override
@@ -94,6 +94,12 @@ public class V1_19_R2 implements NMS, HologramData {
             ServerPlayer plr = ((CraftPlayer) player).getHandle();
             plr.connection.send(packet);
             plr.connection.send(teleportPacket);
+            if (HologramAPI.hasPlaceholderAPI()) {
+                if (checkPlaceholder(hologram, hologram.getLineCount())) {
+                    ClientboundSetEntityDataPacket dataPacket = new ClientboundSetEntityDataPacket(itemEntity.getId(), itemEntity.getEntityData().getNonDefaultValues());
+                    plr.connection.send(dataPacket);
+                }
+            }
         }
     }
 
@@ -152,6 +158,9 @@ public class V1_19_R2 implements NMS, HologramData {
         Location location = hologram.getLocation();
         for (Player plr : location.getWorld().getPlayers()) {
             ServerPlayer player = ((CraftPlayer) plr).getHandle();
+            if (HologramAPI.hasPlaceholderAPI()) {
+                entity.setCustomName(Component.nullToEmpty(PlaceholderAPI.setPlaceholders(plr, line.getText())));
+            }
             player.connection.send(spawnPacket);
             player.connection.send(dataPacket);
         }
@@ -304,12 +313,14 @@ public class V1_19_R2 implements NMS, HologramData {
     @Override
     public void replaceAllPlaceholdersInWorld(World world) {
         List<Hologram> holos = holograms.get(world);
+        List<Player> players = world.getPlayers();
+        if (holos == null) return;
         for (Hologram hologram : holos) {
             List<HologramLine> lines = hologram.getLines();
             for (HologramLine line : lines) {
                 if (checkPlaceholder(hologram, line)) {
                     String text = line.getText();
-                    for (Player player : hologram.getLocation().getWorld().getPlayers()) {
+                    for (Player player : players) {
                         String newText = PlaceholderAPI.setPlaceholders(player, text);
                         line.setText(newText);
                         updateTextFor(line, newText, player);

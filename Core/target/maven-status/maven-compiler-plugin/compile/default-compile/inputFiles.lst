@@ -3,7 +3,8 @@ C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\Cor
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\classes\ClassHologramLine.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\NMSHologramLine.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\SkriptData.java
-C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\effects\EffDeleteHologram.java
+C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\effects\EffMoveHologram.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\classes\ClassHologram.java
+C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\expressions\ExprGetHologram.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\expressions\ExprLastHologram.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\effects\EffCreateHologram.java

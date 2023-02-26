@@ -1,10 +1,12 @@
 package me.outspending.core;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.hologramsk.Hologram;
+import org.hologramsk.HologramAPI;
 import org.hologramsk.HologramLine;
 import org.hologramsk.NMS;
 
@@ -18,7 +20,6 @@ public class NMSHologramLine implements HologramLine {
 
     public NMSHologramLine(String text, NMSHologram hologram) {
         NMS nms = Core.getNMSVersion();
-
         this.text = text;
         this.hologram = hologram;
         this.index = hologram.getLineCount();
