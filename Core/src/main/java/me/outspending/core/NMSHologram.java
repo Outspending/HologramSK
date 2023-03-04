@@ -1,5 +1,7 @@
 package me.outspending.core;
 
+import me.outspending.core.misc.HologramCreateEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -33,6 +35,7 @@ public class NMSHologram implements Hologram, HologramData {
         this.lines.add(new NMSHologramLine(text, this));
         holograms.computeIfAbsent(this.getLocation().getWorld(), k -> new ArrayList<>()).add(this);
         hologramsByName.put(name, this);
+        Bukkit.getPluginManager().callEvent(new HologramCreateEvent(this));
     }
 
     @Override

@@ -7,7 +7,12 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.hologramsk.*;
@@ -15,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
-public final class Core extends JavaPlugin {
+public final class Core extends JavaPlugin implements Listener {
 
     public static JavaPlugin plugin;
     public static NMS NMSVersion;
@@ -34,6 +39,7 @@ public final class Core extends JavaPlugin {
             e.printStackTrace();
         }
 
+        Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
     }
 
@@ -47,23 +53,23 @@ public final class Core extends JavaPlugin {
         switch (version) {
             case "1.17" -> {
                 NMSVersion = new V1_17_R1();
-                Bukkit.getLogger().log(Level.INFO, "[HologramSK] Using NMS version 1.17");
+                sendNMSVersion("1_17_R1");
             }
             case "1.18", "1.18.1" -> {
                 NMSVersion = new V1_18_R1();
-                Bukkit.getLogger().log(Level.INFO, "[HologramSK] Using NMS version 1.18");
+                sendNMSVersion("1_18_R1");
             }
             case "1.18.2" -> {
-                NMSVersion = new V1_18_R1();
-                Bukkit.getLogger().log(Level.INFO, "[HologramSK] Using NMS version 1.18.2");
+                NMSVersion = new V1_18_R2();
+                sendNMSVersion("1_18_R2");
             }
             case "1.19", "1.19.1", "1.19.2" -> {
                 NMSVersion = new V1_19_R1();
-                Bukkit.getLogger().log(Level.INFO, "[HologramSK] Using NMS version 1.19");
+                sendNMSVersion("1_19_R1");
             }
             case "1.19.3" -> {
                 NMSVersion = new V1_19_R2();
-                Bukkit.getLogger().log(Level.INFO, "[HologramSK] Using NMS version 1.19.3");
+                sendNMSVersion("1_19_R2");
             }
             default -> {
                 Bukkit.getLogger().log(Level.SEVERE, "[HologramSK] Unsupported Minecraft version: " + version);
@@ -72,6 +78,14 @@ public final class Core extends JavaPlugin {
             }
         }
         return true;
+    }
+
+    private static void sendNMSVersion(String version) {
+        plugin.getLogger().log(Level.INFO, "-------[ HologramSK ]-------");
+        plugin.getLogger().log(Level.INFO, "HologramSK is using NMS version " + version);
+        plugin.getLogger().log(Level.INFO, "HologramSK Version: V" + plugin.getDescription().getVersion());
+        plugin.getLogger().log(Level.INFO, "HologramSK PlaceholderAPI: " + (HologramAPI.hasPlaceholderAPI() ? "Enabled" : "Disabled"));
+        plugin.getLogger().log(Level.INFO, "----------------------------");
     }
 
     private static boolean checkPluginRequirement() {
@@ -93,6 +107,12 @@ public final class Core extends JavaPlugin {
             }
         }.runTaskTimerAsynchronously(plugin, 20, 20);
         return true;
+    }
+
+    @EventHandler
+    public void onEntityClick(PlayerInteractAtEntityEvent e) {
+        Entity target = e.getRightClicked();
+        Bukkit.broadcastMessage("You clicked " + target.getName());
     }
 
     public static JavaPlugin getPlugin() {

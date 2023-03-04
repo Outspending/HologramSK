@@ -5,5 +5,3 @@ api-version: 1.17
 authors: [ Outspending ]
 description: The best hologram addon for Skript
 softdepend: [ Skript, PlaceholderAPI ]
-commands:
-  testing:
