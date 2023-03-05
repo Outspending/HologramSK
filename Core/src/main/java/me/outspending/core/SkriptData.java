@@ -16,7 +16,7 @@ public class SkriptData {
         lastMadeHologram = hologram;
     }
 
-    public static final Changer<NMSHologram> SOMETHING_IDK = new Changer<NMSHologram>() {
+    public static final Changer<NMSHologram> HOLOGRAM_CHANGER = new Changer<NMSHologram>() {
 
         @Override
         public @Nullable Class<?>[] acceptChange(ChangeMode changeMode) {

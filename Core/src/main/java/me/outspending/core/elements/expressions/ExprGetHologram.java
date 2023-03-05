@@ -7,6 +7,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import me.outspending.core.NMSHologram;
+import me.outspending.core.elements.sections.EffSecCreateHologram;
 import org.bukkit.event.Event;
 import org.hologramsk.Hologram;
 import org.hologramsk.HologramData;

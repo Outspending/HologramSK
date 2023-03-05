@@ -37,6 +37,6 @@ public class ClassHologram {
                         return "NMSHologram{" + nmsHologram.getName() + "}";
                     }
                 })
-                .changer(SkriptData.SOMETHING_IDK));
+                .changer(SkriptData.HOLOGRAM_CHANGER));
     }
 }
