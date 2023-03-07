@@ -2,6 +2,7 @@ package me.outspending.core;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
+import me.outspending.core.misc.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.hologramsk.*;
@@ -40,6 +42,16 @@ public final class Core extends JavaPlugin implements Listener {
         }
 
         Bukkit.getPluginManager().registerEvents(this, this);
+
+        UpdateChecker checker = new UpdateChecker();
+        checker.getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                Bukkit.getLogger().log(Level.INFO, "[HologramSK] You are running the latest version (" + version + ")!");
+            } else {
+                Bukkit.getLogger().log(Level.INFO, "[HologramSK] There is a new update available: " + version);
+            }
+        });
+
         Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
     }
 
@@ -110,9 +122,15 @@ public final class Core extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onEntityClick(PlayerInteractAtEntityEvent e) {
-        Entity target = e.getRightClicked();
-        Bukkit.broadcastMessage("You clicked " + target.getName());
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        UpdateChecker checker = new UpdateChecker();
+        checker.getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                e.getPlayer().sendMessage("§a[HologramSK] You are using the latest version!");
+            } else {
+                e.getPlayer().sendMessage("§c[HologramSK] There is a new update available: " + version);
+            }
+        });
     }
 
     public static JavaPlugin getPlugin() {
