@@ -7,6 +7,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import me.outspending.core.Core;
 import me.outspending.core.NMSHologram;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.hologramsk.NMS;
@@ -35,13 +36,15 @@ public class EffVisibleHologram extends Effect {
         for (int i = 0; i < players.length; i++) {
             final Player plr = players[i];
             if (show) {
-                if (!hiddenPlayers.contains(plr.getUniqueId())) {
+                if (hiddenPlayers.contains(plr.getUniqueId())) {
                     nms.displayHologram(hologram, plr);
+                    hiddenPlayers.remove(plr.getUniqueId());
                 }
                 continue;
             }
-            if (hiddenPlayers.contains(plr.getUniqueId())) {
+            if (!hiddenPlayers.contains(plr.getUniqueId())) {
                 nms.hideHologram(hologram, plr);
+                hiddenPlayers.add(plr.getUniqueId());
             }
         }
     }
