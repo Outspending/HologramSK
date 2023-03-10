@@ -42,17 +42,18 @@ public final class Core extends JavaPlugin implements Listener {
         }
 
         Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
 
         UpdateChecker checker = new UpdateChecker();
         checker.getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                Bukkit.getLogger().log(Level.INFO, "[HologramSK] You are running the latest version (" + version + ")!");
+                Bukkit.getLogger().log(Level.INFO, "[HologramSK] You are using the latest version!");
             } else {
+                checker.setIsUpdateAvailable(true);
+                checker.setLatestVersion(version);
                 Bukkit.getLogger().log(Level.INFO, "[HologramSK] There is a new update available: " + version);
             }
         });
-
-        Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
     }
 
     @Override
@@ -122,15 +123,14 @@ public final class Core extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        UpdateChecker checker = new UpdateChecker();
-        checker.getVersion(version -> {
-            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                e.getPlayer().sendMessage("§a[HologramSK] You are using the latest version!");
-            } else {
-                e.getPlayer().sendMessage("§c[HologramSK] There is a new update available: " + version);
+    public void onEntityClick(PlayerJoinEvent e) {
+        Player player = e.getPlayer();
+        if (player.isOp()) {
+            UpdateChecker checker = new UpdateChecker();
+            if (checker.getIsUpdateAvailable()) {
+                player.sendMessage("§a[HologramSK] There is a new update available: " + checker.getLatestVersion());
             }
-        });
+        }
     }
 
     public static JavaPlugin getPlugin() {
