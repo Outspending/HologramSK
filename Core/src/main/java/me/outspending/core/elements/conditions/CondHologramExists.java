@@ -1,6 +1,10 @@
 package me.outspending.core.elements.conditions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -10,6 +14,10 @@ import org.hologramsk.Hologram;
 import org.hologramsk.HologramData;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Hologram Exists")
+@Description("Checks if a hologram exists")
+@Examples("if hologram \"test\" exists:")
+@Since("1.0")
 public class CondHologramExists extends Condition implements HologramData {
 
     static {
@@ -30,6 +38,7 @@ public class CondHologramExists extends Condition implements HologramData {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         name = (Expression<String>) expressions[0];

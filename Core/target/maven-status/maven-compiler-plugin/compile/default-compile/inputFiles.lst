@@ -7,9 +7,13 @@ C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\ele
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\expressions\ExprGetHologram.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\expressions\ExprLastHologram.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\effects\EffVisibleHologram.java
+C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\expressions\ExprHologramName.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\NMSHologram.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\Core.java
+C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\conditions\CondCanSee.java
+C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\expressions\ExprHologramLines.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\NMSHologramLine.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\SkriptData.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\misc\HologramCreateEvent.java
 C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\elements\classes\ClassHologram.java
+C:\Users\Josh\IdeaProjects\HologramSK\Core\src\main\java\me\outspending\core\misc\UpdateChecker.java

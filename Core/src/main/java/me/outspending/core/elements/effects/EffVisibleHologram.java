@@ -1,10 +1,14 @@
 package me.outspending.core.elements.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import jdk.jfr.Name;
 import me.outspending.core.Core;
 import me.outspending.core.NMSHologram;
 import org.bukkit.Bukkit;
@@ -16,11 +20,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
+@Name("Hologram Visibility")
+@Description("Shows or hides a hologram from a player")
+@Examples({"hide hologram {_hologram} from player", "show hologram {_hologram} to player"})
+@Since("1.0")
 public class EffVisibleHologram extends Effect {
 
     static {
         Skript.registerEffect(EffVisibleHologram.class,
-                "(1¦show|hide) holo[gram] %hologram% (from|to) %players%");
+                "show holo[gram] %hologram% to %players%",
+                "hide holo[gram] %hologram% from %players%");
     }
 
     private Expression<NMSHologram> hologram;
@@ -54,13 +63,12 @@ public class EffVisibleHologram extends Effect {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         hologram = (Expression<NMSHologram>) expressions[0];
         players = (Expression<Player>) expressions[1];
-        if (parseResult.mark == 1) {
-            show = true;
-        }
+        show = i == 1;
         return true;
     }
 }

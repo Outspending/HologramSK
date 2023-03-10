@@ -1,6 +1,10 @@
 package me.outspending.core.elements.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +15,10 @@ import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Move Hologram")
+@Description("Moves a hologram to a location")
+@Examples("move hologram {_hologram} to location of player")
+@Since("1.0")
 public class EffMoveHologram extends Effect {
 
     static {
@@ -34,6 +42,7 @@ public class EffMoveHologram extends Effect {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         hologram = (Expression<NMSHologram>) expressions[0];

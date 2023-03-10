@@ -41,9 +41,6 @@ public final class Core extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
 
-        Bukkit.getPluginManager().registerEvents(this, this);
-        Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
-
         UpdateChecker checker = new UpdateChecker();
         checker.getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -54,6 +51,8 @@ public final class Core extends JavaPlugin implements Listener {
                 Bukkit.getLogger().log(Level.INFO, "[HologramSK] There is a new update available: " + version);
             }
         });
+        Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getLogger().log(Level.INFO, "[HologramSK] Plugin loaded successfully!");
     }
 
     @Override

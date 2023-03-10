@@ -1,18 +1,24 @@
 package me.outspending.core.elements.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import me.outspending.core.NMSHologram;
-import me.outspending.core.elements.sections.EffSecCreateHologram;
 import org.bukkit.event.Event;
-import org.hologramsk.Hologram;
 import org.hologramsk.HologramData;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Get Hologram")
+@Description("Gets a hologram by name")
+@Examples("set {_hologram} to hologram \"test\"")
+@Since("1.0")
 public class ExprGetHologram extends SimpleExpression<NMSHologram> implements HologramData {
 
     static {
@@ -43,6 +49,7 @@ public class ExprGetHologram extends SimpleExpression<NMSHologram> implements Ho
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         name = (Expression<String>) expressions[0];

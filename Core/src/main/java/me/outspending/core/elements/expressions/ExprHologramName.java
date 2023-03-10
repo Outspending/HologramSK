@@ -11,27 +11,25 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import me.outspending.core.NMSHologram;
-import me.outspending.core.SkriptData;
-import me.outspending.core.elements.sections.EffSecCreateHologram;
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-@Name("Last Hologram")
-@Description("Gets the last hologram created")
+@Name("Hologram Name")
+@Description("Gets the name of a hologram")
+@Examples("set {_name} to name of {_hologram}")
 @Since("1.0")
-public class ExprLastHologram extends SimpleExpression<NMSHologram> {
+public class ExprHologramName extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprLastHologram.class, NMSHologram.class, ExpressionType.SIMPLE, "[the] hologram");
+        Skript.registerExpression(ExprHologramName.class, String.class, ExpressionType.SIMPLE, "name of %hologram%");
     }
 
-    private boolean interception;
+    private Expression<NMSHologram> hologram;
 
     @Override
-    protected @Nullable NMSHologram[] get(Event event) {
-        SkriptData data = new SkriptData();
-        return new NMSHologram[]{data.getLastMadeHologram()};
+    protected @Nullable String[] get(Event event) {
+        NMSHologram hologram1 = hologram.getSingle(event);
+        return new String[]{hologram1.getName()};
     }
 
     @Override
@@ -40,8 +38,8 @@ public class ExprLastHologram extends SimpleExpression<NMSHologram> {
     }
 
     @Override
-    public Class<? extends NMSHologram> getReturnType() {
-        return NMSHologram.class;
+    public Class<? extends String> getReturnType() {
+        return String.class;
     }
 
     @Override
@@ -49,14 +47,9 @@ public class ExprLastHologram extends SimpleExpression<NMSHologram> {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        interception = getParser().isCurrentSection(EffSecCreateHologram.class);
-        if (!interception) {
-            Skript.error("The expression 'hologram' can only be used in the 'create hologram' section");
-            return false;
-        }
+        hologram = (Expression<NMSHologram>) expressions[0];
         return true;
     }
 }

@@ -22,7 +22,7 @@ public class UpdateChecker {
                     consumer.accept(scanner.next());
                 }
             } catch (IOException e) {
-                Core.getPlugin().getLogger().log(Level.SEVERE, "Cannot look for updates", e.getMessage());
+                Core.getPlugin().getLogger().log(Level.SEVERE, "There was an error trying to look for updates!", e.getMessage());
             }
         });
     }
